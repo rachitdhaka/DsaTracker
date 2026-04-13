@@ -47,10 +47,10 @@ export default async function TopicPage({
   const solvedIds = solvedData?.map((s) => s.question_id) || [];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+    <div className="min-h-screen bg-background text-foreground">
       <Navbar user={user} />
 
-      <main className="pt-28 pb-12 px-6 max-w-7xl mx-auto">
+      <main className="pt-24 pb-12 px-6 max-w-7xl mx-auto">
         <TopicQuestionsList
           topicName={questions?.[0]?.topic || readableTopic}
           questions={questions || []}

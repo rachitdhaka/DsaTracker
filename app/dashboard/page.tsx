@@ -114,34 +114,24 @@ export default async function DashboardPage() {
     })) || [];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+    <div className="min-h-screen bg-background text-foreground">
       <Navbar user={user} />
 
-      <main className="pt-24 pb-12 px-6 max-w-7xl mx-auto space-y-12">
-        {/* Hero Section */}
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="animate-in fade-in slide-in-from-left duration-700">
-            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-2">
-              Welcome back,{" "}
-              {user.user_metadata?.full_name?.split(" ")[0] || "Warrior"}.
-            </h1>
-            <p className="text-slate-500 dark:text-slate-400 text-lg">
-              You have solved{" "}
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">
-                {totalSolved}
-              </span>{" "}
-              questions out of {totalQuestions}.
-            </p>
-          </div>
-          {/* Hero buttons removed as per request */}
-        </header>
-
+      <main className="pt-20 pb-20 px-8 max-w-[90rem] mx-auto space-y-10">
         {/* Stats Bento Grid */}
-        <StatsGrid stats={stats} />
+        <div className="animate-in mt-10 fade-in slide-in-from-bottom duration-1000">
+          <StatsGrid stats={stats} />
+        </div>
 
         {/* Topic Mastery Matrix */}
-        <TopicMastery topics={topicsArray} />
+        <div className="animate-in fade-in slide-in-from-bottom duration-1000 delay-150">
+          <TopicMastery topics={topicsArray} />
+        </div>
 
+        {/* Recent Activity */}
+        <div className="animate-in fade-in slide-in-from-bottom duration-1000 delay-300">
+          <RecentSessions sessions={liveSessions} />
+        </div>
       </main>
     </div>
   );

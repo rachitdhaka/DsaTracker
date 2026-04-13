@@ -56,20 +56,20 @@ export function TopicQuestionsList({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white dark:bg-slate-900/50 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom duration-500">
-      <header className="p-8 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
+    <div className="w-full max-w-4xl mx-auto bg-card rounded-xl border border-border shadow-sm overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom duration-500">
+      <header className="p-6 border-b border-border flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link
             href="/dashboard"
-            className="p-3 hover:bg-white dark:hover:bg-slate-800 rounded-2xl transition-all border border-transparent hover:border-slate-200 dark:hover:border-slate-700 group ring-1 ring-transparent hover:ring-slate-200/50"
+            className="p-2.5 hover:bg-muted rounded-xl transition-all border border-border group"
           >
-            <ArrowLeft className="h-5 w-5 text-slate-500 group-hover:text-blue-600 transition-colors" />
+            <ArrowLeft className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
           </Link>
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">
               {topicName}
             </h2>
-            <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">
+            <p className="text-xs font-medium text-muted-foreground mt-1">
               {solvedSet.size} of {questions.length} problems completed
             </p>
           </div>
@@ -89,33 +89,27 @@ export function TopicQuestionsList({
             return (
               <div
                 key={q.id}
-                className={`group flex items-center justify-between p-5 rounded-2xl border transition-all duration-300 ${
+                className={`group flex items-center justify-between p-4 rounded-xl border transition-all duration-300 ${
                   isSolved
-                    ? "bg-blue-50/30 dark:bg-blue-900/5 border-blue-100/50 dark:border-blue-900/20"
-                    : "bg-white dark:bg-slate-800/30 border-slate-100 dark:border-slate-800/50 hover:border-blue-200 dark:hover:border-blue-800/50 hover:shadow-md"
+                    ? "bg-muted/30 border-border"
+                    : "bg-card border-border hover:bg-muted/50"
                 }`}
               >
                 <div className="flex items-center gap-5 flex-1 min-w-0">
                   <button
                     onClick={() => handleToggle(q.id)}
                     disabled={isLoading}
-                    className={`shrink-0 h-7 w-7 rounded-xl border-2 flex items-center justify-center transition-all duration-300 ${
+                    className={`shrink-0 h-6 w-6 rounded-lg border-2 flex items-center justify-center transition-all duration-300 ${
                       isSolved
-                        ? "bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-600/20"
-                        : "border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 hover:border-blue-400"
+                        ? "bg-primary border-primary text-primary-foreground shadow-sm"
+                        : "border-border bg-background hover:border-foreground/50"
                     } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
-                    {isSolved && <CheckCircle2 className="h-4 w-4" />}
+                    {isSolved && <CheckCircle2 className="h-3.5 w-3.5" />}
                   </button>
 
                   <div className="flex-1 min-w-0">
-                    <h3
-                      className={`text-base font-semibold truncate transition-colors ${
-                        isSolved
-                          ? "text-blue-900 dark:text-blue-100"
-                          : "text-slate-900 dark:text-slate-100"
-                      }`}
-                    >
+                    <h3 className="text-[15px] font-semibold truncate text-foreground">
                       {q.title}
                     </h3>
                   </div>
@@ -127,14 +121,14 @@ export function TopicQuestionsList({
                       href={q.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white dark:hover:bg-slate-700 transition-all border border-transparent hover:border-slate-200 dark:hover:border-slate-600"
+                      className="p-2 rounded-lg bg-background text-muted-foreground hover:text-foreground transition-all border border-border"
                       title="View Problem"
                     >
-                      <ExternalLink className="h-4 w-4" />
+                      <ExternalLink className="h-3.5 w-3.5" />
                     </a>
                   )}
-                  <div className="p-2 rounded-xl bg-slate-50/50 dark:bg-slate-800/50 border border-transparent group-hover:border-slate-200 dark:group-hover:border-slate-700 transition-all">
-                    <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-slate-600 dark:group-hover:text-slate-400" />
+                  <div className="p-1.5 rounded-lg border border-border group-hover:bg-muted transition-all">
+                    <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
                   </div>
                 </div>
               </div>
@@ -143,18 +137,18 @@ export function TopicQuestionsList({
         )}
       </div>
 
-      <footer className="p-8 border-t border-slate-100 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900/30">
+      <footer className="p-6 border-t border-border bg-muted/20">
         <div className="flex justify-between items-center mb-4">
-          <span className="text-sm font-bold text-slate-900 dark:text-slate-100">
+          <span className="text-sm font-bold text-foreground">
             Progress
           </span>
-          <span className="text-sm font-bold text-blue-600 dark:text-blue-400">
+          <span className="text-sm font-bold text-primary">
             {Math.round((solvedSet.size / questions.length) * 100) || 0}% Complete
           </span>
         </div>
-        <div className="w-full bg-slate-200 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
+        <div className="w-full bg-muted h-2 rounded-full overflow-hidden">
           <div
-            className="h-full bg-blue-600 rounded-full shadow-lg shadow-blue-600/20 transition-all duration-1000"
+            className="h-full bg-primary rounded-full transition-all duration-1000"
             style={{ width: `${(solvedSet.size / questions.length) * 100}%` }}
           />
         </div>

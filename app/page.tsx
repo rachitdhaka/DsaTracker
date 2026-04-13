@@ -1,62 +1,61 @@
 import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
-import { ArrowRight, LayoutDashboard } from 'lucide-react'
+import { LayoutDashboard } from 'lucide-react'
+import { Button } from "@/components/ui/button"
 
 export default async function Page() {
   const cookieStore = await cookies()
   const supabase = createClient(cookieStore)
-
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center p-8 relative overflow-hidden">
-      {/* Decorative background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-600/10 blur-[120px] rounded-full" />
-      </div>
-
-      <div className="relative z-10 flex flex-col items-center text-center max-w-2xl gap-8 animate-in fade-in zoom-in duration-1000">
-        <div className="h-20 w-20 rounded-3xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-2xl shadow-blue-500/20">
-          <LayoutDashboard className="h-10 w-10 text-white" />
-        </div>
-
-        <div className="space-y-4">
-          <h1 className="text-5xl font-extrabold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
-            DSA Tracker
+    <div className="relative min-h-screen bg-background text-foreground flex flex-col items-center justify-center p-6 overflow-hidden selection:bg-chart-1/10">
+      {/* Refined ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[800px] bg-chart-1/5 blur-[160px] rounded-full pointer-events-none" />
+      
+      <main className="relative z-10 flex flex-col items-center text-center gap-12 max-w-2xl animate-in fade-in slide-in-from-bottom-6 duration-1000 ease-out">
+        <div className="flex flex-col gap-5">
+          <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-foreground/90 leading-tight">
+            The sanctuary for <span className="text-foreground">analytical mastery.</span>
           </h1>
-          <p className="text-slate-400 text-lg">
-            Master your analytical skills with a premium dashboard, real-time progress tracking, and 450+ curated problems.
+          <p className="text-sm md:text-base text-muted-foreground/70 font-medium max-w-sm mx-auto leading-relaxed">
+            A minimalist tracker for 450+ curated algorithm problems. 
+            Designed for focus, built for consistency.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+        <div className="flex items-center justify-center gap-4">
           {user ? (
-            <Link 
-              href="/dashboard" 
-              className="px-8 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all flex items-center justify-center gap-2 group shadow-lg shadow-blue-600/20"
-            >
-              Go to Dashboard
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            <Button asChild size="sm" className="h-10 px-8 rounded-md font-medium transition-all hover:bg-primary/95 active:scale-[0.98]">
+              <Link href="/dashboard">
+                Dashboard
+                <LayoutDashboard data-icon="inline-end" />
+              </Link>
+            </Button>
           ) : (
-            <Link 
-              href="/login" 
-              className="px-8 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all flex items-center justify-center gap-2 group shadow-lg shadow-blue-600/20"
-            >
-              Get Started
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            <>
+              <Button asChild size="sm" className="h-10 px-8 rounded-md font-medium transition-all hover:bg-primary/95 active:scale-[0.98]">
+                <Link href="/login">
+                  Get Started
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="sm" className="h-10 px-8 rounded-md font-medium transition-all border-outline-variant bg-transparent hover:bg-muted/50 active:scale-[0.98]">
+                <Link href="/login">
+                  Login
+                </Link>
+              </Button>
+            </>
           )}
         </div>
+      </main>
 
-        <div className="pt-8 border-t border-slate-800 w-full">
-          <p className="text-slate-500 text-sm">
-            Powered by Supabase & Next.js
-          </p>
-        </div>
-      </div>
+      <footer className="absolute bottom-12 flex items-center gap-2 opacity-20">
+        <div className="size-1 rounded-full bg-chart-1" />
+        <p className="text-[10px] font-bold tracking-[0.2em] uppercase">
+          DSA Tracker
+        </p>
+      </footer>
     </div>
   )
 }

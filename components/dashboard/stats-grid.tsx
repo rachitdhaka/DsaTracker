@@ -1,44 +1,63 @@
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Flame, Target, Trophy } from "lucide-react";
 
 export function StatsGrid({ stats }: { stats: any }) {
   const items = [
     {
+      label: "Daily Streak",
+      value: stats.streak || 0,
+      subValue: "+2 today",
+      icon: Flame,
+      color: "text-orange-500",
+      bg: "bg-orange-500/10",
+    },
+    {
       label: "Solved",
       value: stats.solved || 0,
       subValue: `/ ${stats.totalQuestions || 0}`,
-      icon: CheckCircle2,
-      iconColor: "text-green-500",
-      bgColor: "bg-green-500/10",
+      color: "text-emerald-500",
+      bg: "bg-emerald-500/10",
+      showPercentage: true,
     },
   ];
 
+  const percentage =
+            Math.round((stats.solved / stats.totalQuestions) * 100) || 0;
+
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-      {items.map((item, i) => (
-        <div
-          key={i}
-          className="bg-white dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-800/50 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group"
-        >
+    <section className="flex justify-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-4xl">
+        {items.map((item, i) => (
           <div
-            className={`absolute -right-2 -top-2 p-6 transition-transform group-hover:scale-110 opacity-10 ${item.iconColor}`}
+            key={i}
+            className="bg-card p-6 flex gap-8 rounded-xl transition-all duration-300 hover:bg-muted/50 group relative overflow-hidden border border-border flex items-center justify-between"
           >
-            <item.icon size={64} />
-          </div>
+            <div className="space-y-1">
+              <span className="text-[10px]  uppercase tracking-[0.2em] text-muted-foreground">
+                {item.label}
+              </span>
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl  tracking-tight text-foreground">
+                  {item.value}
+                </span>
+                <span className={`text-[10px]  ${item.color} opacity-80 uppercase tracking-widest`}>
+                  {item.subValue}
+                </span>
+              </div>
+            </div>
 
-          <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
-            {item.label}
-          </span>
-
-          <div className="flex items-baseline gap-2 mt-2">
-            <span className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
-              {item.value}
-            </span>
-            <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
-              {item.subValue}
-            </span>
+            {item.showPercentage && (
+              <div className="flex flex-col items-end">
+                <span className="text-2xl  tracking-tight text-foreground">
+                  {percentage}%
+                </span>
+                <span className="text-[9px]  uppercase tracking-widest text-muted-foreground">
+                  Complete
+                </span>
+              </div>
+            )}
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </section>
   );
 }
