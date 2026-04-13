@@ -6,11 +6,8 @@ import { createClient } from "@/utils/supabase/server";
 import { AuthBanner } from "@/components/auth-banner";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const geistSans = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist-sans",
-  display: "swap",
-});
+// Optimized system font stack to avoid build-time Google Font connection issues
+const fontSans = "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
 
 export const metadata: Metadata = {
   title: "DSA Tracker",
@@ -31,10 +28,10 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} h-full antialiased`}
+      className="h-full antialiased"
       suppressHydrationWarning
     >
-      <body className={`min-h-full flex flex-col selection:bg-yellow-400 selection:text-black ${geistSans.className}`}>
+      <body className="min-h-full flex flex-col selection:bg-yellow-400 selection:text-black font-sans">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

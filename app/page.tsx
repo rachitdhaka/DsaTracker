@@ -2,7 +2,8 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { LayoutDashboard, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default async function Page() {
   const cookieStore = await cookies();
@@ -41,33 +42,36 @@ export default async function Page() {
 
         <div className="flex items-center justify-center gap-4">
           {user ? (
-            <Button
-              asChild
-              size="lg"
-              className="px-8 rounded-md font-medium transition-all hover:bg-primary/95 active:scale-[0.98]"
+            <Link 
+              href="/dashboard"
+              className={cn(
+                buttonVariants({ size: "lg" }),
+                "px-8 rounded-md font-medium transition-all hover:bg-primary/95 active:scale-[0.98]"
+              )}
             >
-              <Link href="/dashboard">Dashboard</Link>
-            </Button>
+              Dashboard
+            </Link>
           ) : (
             <>
-              <Button
-                asChild
-                size="lg"
-                className="px-8 rounded-md font-medium transition-all hover:bg-primary/95 active:scale-[0.98]"
+              <Link 
+                href="/login"
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "px-8 rounded-md font-medium transition-all hover:bg-primary/95 active:scale-[0.98]"
+                )}
               >
-                <Link href="/login">
-                  Get Started
-                  <ArrowRight data-icon="inline-end" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="px-8 rounded-md font-medium transition-all active:scale-[0.98]"
+                Get Started
+                <ArrowRight data-icon="inline-end" />
+              </Link>
+              <Link 
+                href="/login"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "px-8 rounded-md font-medium transition-all active:scale-[0.98]"
+                )}
               >
-                <Link href="/login">Login</Link>
-              </Button>
+                Login
+              </Link>
             </>
           )}
         </div>
