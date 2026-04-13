@@ -1,9 +1,11 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { LayoutDashboard, ArrowRight } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/dashboard/theme-toggle";
 
 export default async function Page() {
   const cookieStore = await cookies();
@@ -12,8 +14,17 @@ export default async function Page() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  if (user) {
+    return redirect("/dashboard");
+  }
+
   return (
     <div className="relative min-h-screen bg-background text-foreground flex flex-col items-center justify-center p-6 overflow-hidden">
+      {/* Top action area */}
+      <div className="absolute top-6 right-6 z-20">
+        <ThemeToggle />
+      </div>
+
       {/* Refined ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[800px] bg-chart-1/5 blur-[160px] rounded-full pointer-events-none" />
 

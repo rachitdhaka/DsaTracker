@@ -31,7 +31,7 @@ export default async function RootLayout({
       className="h-full antialiased"
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col selection:bg-yellow-400 selection:text-black font-sans">
+      <body className="min-h-full flex flex-col selection:bg-yellow-100 selection:text-black font-sans">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
