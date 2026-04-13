@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d8dadc",
+                        "primary-container": "#2563eb",
+                        "primary": "#004ac6",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "outline-variant": "#c3c6d7",
+                        "secondary-container": "#acbfff",
+                        "on-surface": "#191c1e",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#b4c5ff",
+                        "surface": "#f7f9fb",
+                        "on-secondary-container": "#394c84",
+                        "on-secondary-fixed-variant": "#31447b",
+                        "on-tertiary-fixed": "#360f00",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "secondary": "#495c95",
+                        "inverse-surface": "#2d3133",
+                        "secondary-fixed-dim": "#b4c5ff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed": "#dbe1ff",
+                        "surface-variant": "#e0e3e5",
+                        "on-error": "#ffffff",
+                        "outline": "#737686",
+                        "on-primary-container": "#eeefff",
+                        "on-tertiary-container": "#ffede6",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary": "#943700",
+                        "on-primary-fixed": "#00174b",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#dbe1ff",
+                        "error-container": "#ffdad6",
+                        "background": "#f7f9fb",
+                        "tertiary-fixed": "#ffdbcd",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-surface-variant": "#434655",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "surface-bright": "#f7f9fb",
+                        "on-background": "#191c1e",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-secondary-fixed": "#00174b",
+                        "tertiary-container": "#bc4800"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .card-shadow {
+            box-shadow: 0px 12px 32px rgba(25, 28, 30, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- TopNavBar Implementation -->
+<nav class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center w-full px-6 py-3 max-w-full">
+<div class="flex items-center gap-12">
+<span class="text-xl font-bold tracking-tighter text-blue-700 dark:text-blue-400">Intellectual Sanctuary</span>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-blue-700 dark:text-blue-400 font-semibold border-b-2 border-blue-600 dark:border-blue-400 pb-1 transition-all duration-200 ease-in-out active:scale-95" href="#">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors transition-all duration-200 ease-in-out active:scale-95" href="#">Problems</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors transition-all duration-200 ease-in-out active:scale-95" href="#">Contests</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors transition-all duration-200 ease-in-out active:scale-95" href="#">Progress</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors transition-all duration-200 ease-in-out active:scale-95" href="#">Community</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center bg-slate-100 dark:bg-slate-900 rounded-full px-4 py-1.5 gap-2">
+<span class="material-symbols-outlined text-slate-400 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm text-on-surface-variant w-48" placeholder="Search knowledge..." type="text"/>
+</div>
+<button class="p-2 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 rounded-lg transition-all duration-200 ease-in-out active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<button class="p-2 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 rounded-lg transition-all duration-200 ease-in-out active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+<div class="h-9 w-9 rounded-full overflow-hidden ml-2 ring-2 ring-primary-container/20">
+<img alt="User profile avatar" class="h-full w-full object-cover" data-alt="Close-up portrait of a professional male software engineer with glasses in a soft-lit modern office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE2xswA57kkNy7bUlXfbCEFiDJ-Cv5X9dzLydP9P11PNna45qvdcAMepAEu0Xpw5l60carpcb5GQRPCIJx9YoCMIVgpHfdOY9OjWYpGqSNm3DKnfMSVFJbAMzjFecbR7G_tSKtJKPE4AZ1mLyijaBxjpCQGvWydXq1y7dXwe7GVSzWG5w1o7hwNsmG7bLT1S_SwbcdX6Ftny9cUOPz9hlOAueQnAzqNZtYzLdbVF-f5l2J69XX1aTWqf0E7wUC5hwKBoZoPg5GCHw"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-12 px-6 max-w-5xl mx-auto space-y-12">
+<!-- Hero Welcome Header -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-4xl font-extrabold tracking-tighter text-on-surface mb-2">Welcome back, Alex.</h1>
+<p class="text-on-surface-variant text-lg">Your analytical journey is at <span class="text-primary font-semibold">68%</span> of this week's target.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-medium transition-all duration-200 ease-in-out active:scale-95 card-shadow">
+                    Resume Graph Study
+                </button>
+<button class="px-6 py-2.5 rounded-full bg-surface-container text-on-surface-variant font-medium hover:bg-surface-container-high transition-all duration-200 ease-in-out active:scale-95">
+                    View Schedule
+                </button>
+</div>
+</header>
+<!-- Compact Stats Bento Grid -->
+<section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+<!-- Daily Streak -->
+<div class="bg-surface-container-lowest p-6 rounded-lg card-shadow flex flex-col justify-between h-32 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<span class="text-label text-on-surface-variant font-medium">Daily Streak</span>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold tracking-tight">14</span>
+<span class="text-sm text-green-600 font-medium">+2 today</span>
+</div>
+</div>
+<!-- Problems Solved -->
+<div class="bg-surface-container-lowest p-6 rounded-lg card-shadow flex flex-col justify-between h-32 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+</div>
+<span class="text-label text-on-surface-variant font-medium">Solved</span>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold tracking-tight">342</span>
+<span class="text-sm text-on-surface-variant">/ 800</span>
+</div>
+</div>
+<!-- Accuracy -->
+<div class="bg-surface-container-lowest p-6 rounded-lg card-shadow flex flex-col justify-between h-32 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">target</span>
+</div>
+<span class="text-label text-on-surface-variant font-medium">Accuracy</span>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold tracking-tight">76.4%</span>
+<span class="text-sm text-primary font-medium">Top 5%</span>
+</div>
+</div>
+<!-- Global Rank -->
+<div class="bg-surface-container-lowest p-6 rounded-lg card-shadow flex flex-col justify-between h-32 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+</div>
+<span class="text-label text-on-surface-variant font-medium">Global Rank</span>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold tracking-tight">12,402</span>
+<span class="text-sm text-amber-600 font-medium">↑ 432</span>
+</div>
+</div>
+</section>
+<!-- Topic Mastery Matrix -->
+<section class="space-y-6">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold tracking-tight">Topic Mastery Matrix</h2>
+<button class="text-primary text-sm font-semibold hover:underline">Customize Grid</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Arrays & Hashing -->
+<div class="bg-surface-container-lowest p-5 rounded-lg card-shadow group hover:bg-primary transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary">grid_view</span>
+<span class="text-xs font-bold text-primary bg-primary-fixed px-2 py-0.5 rounded group-hover:bg-on-primary group-hover:text-primary">92%</span>
+</div>
+<h3 class="text-sm font-bold group-hover:text-on-primary">Arrays &amp; Hashing</h3>
+<p class="text-[10px] text-on-surface-variant mt-1 group-hover:text-on-primary/80">42 Problems Completed</p>
+</div>
+<!-- Linked Lists -->
+<div class="bg-surface-container-lowest p-5 rounded-lg card-shadow group hover:bg-primary transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary">link</span>
+<span class="text-xs font-bold text-primary bg-primary-fixed px-2 py-0.5 rounded group-hover:bg-on-primary group-hover:text-primary">78%</span>
+</div>
+<h3 class="text-sm font-bold group-hover:text-on-primary">Linked Lists</h3>
+<p class="text-[10px] text-on-surface-variant mt-1 group-hover:text-on-primary/80">28 Problems Completed</p>
+</div>
+<!-- Binary Search -->
+<div class="bg-surface-container-lowest p-5 rounded-lg card-shadow group hover:bg-primary transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary">search</span>
+<span class="text-xs font-bold text-primary bg-primary-fixed px-2 py-0.5 rounded group-hover:bg-on-primary group-hover:text-primary">85%</span>
+</div>
+<h3 class="text-sm font-bold group-hover:text-on-primary">Binary Search</h3>
+<p class="text-[10px] text-on-surface-variant mt-1 group-hover:text-on-primary/80">15 Problems Completed</p>
+</div>
+<!-- Trees -->
+<div class="bg-surface-container-lowest p-5 rounded-lg card-shadow group hover:bg-primary transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary">account_tree</span>
+<span class="text-xs font-bold text-primary bg-primary-fixed px-2 py-0.5 rounded group-hover:bg-on-primary group-hover:text-primary">64%</span>
+</div>
+<h3 class="text-sm font-bold group-hover:text-on-primary">Trees &amp; Graphs</h3>
+<p class="text-[10px] text-on-surface-variant mt-1 group-hover:text-on-primary/80">54 Problems Completed</p>
+</div>
+<!-- Dynamic Programming -->
+<div class="bg-surface-container-lowest p-5 rounded-lg card-shadow group hover:bg-primary transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary">layers</span>
+<span class="text-xs font-bold text-primary bg-primary-fixed px-2 py-0.5 rounded group-hover:bg-on-primary group-hover:text-primary">42%</span>
+</div>
+<h3 class="text-sm font-bold group-hover:text-on-primary">Dynamic Prog.</h3>
+<p class="text-[10px] text-on-surface-variant mt-1 group-hover:text-on-primary/80">12 Problems Completed</p>
+</div>
+<!-- Backtracking -->
+<div class="bg-surface-container-lowest p-5 rounded-lg card-shadow group hover:bg-primary transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary">rebase_edit</span>
+<span class="text-xs font-bold text-primary bg-primary-fixed px-2 py-0.5 rounded group-hover:bg-on-primary group-hover:text-primary">51%</span>
+</div>
+<h3 class="text-sm font-bold group-hover:text-on-primary">Backtracking</h3>
+<p class="text-[10px] text-on-surface-variant mt-1 group-hover:text-on-primary/80">9 Problems Completed</p>
+</div>
+<!-- Tries -->
+<div class="bg-surface-container-lowest p-5 rounded-lg card-shadow group hover:bg-primary transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary">hub</span>
+<span class="text-xs font-bold text-primary bg-primary-fixed px-2 py-0.5 rounded group-hover:bg-on-primary group-hover:text-primary">33%</span>
+</div>
+<h3 class="text-sm font-bold group-hover:text-on-primary">Tries</h3>
+<p class="text-[10px] text-on-surface-variant mt-1 group-hover:text-on-primary/80">4 Problems Completed</p>
+</div>
+<!-- Heap / Priority Queue -->
+<div class="bg-surface-container-lowest p-5 rounded-lg card-shadow group hover:bg-primary transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary">sort</span>
+<span class="text-xs font-bold text-primary bg-primary-fixed px-2 py-0.5 rounded group-hover:bg-on-primary group-hover:text-primary">72%</span>
+</div>
+<h3 class="text-sm font-bold group-hover:text-on-primary">Heaps &amp; Queues</h3>
+<p class="text-[10px] text-on-surface-variant mt-1 group-hover:text-on-primary/80">18 Problems Completed</p>
+</div>
+</div>
+</section>
+<!-- Recent Activity (Glassmorphism List) -->
+<section class="bg-surface-container-low rounded-lg p-6 space-y-4">
+<h2 class="text-xl font-bold tracking-tight">Recent Sessions</h2>
+<div class="space-y-3">
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center justify-between card-shadow">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-600">check_circle</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Longest Palindromic Substring</h4>
+<p class="text-xs text-on-surface-variant">Dynamic Programming • 14 mins ago</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="bg-amber-50 text-amber-600 px-3 py-1 rounded-lg text-xs font-bold">Medium</span>
+<span class="text-sm font-medium text-on-surface-variant">4.2ms</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center justify-between card-shadow">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-600">check_circle</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Two Sum II</h4>
+<p class="text-xs text-on-surface-variant">Two Pointers • 2 hours ago</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="bg-green-50 text-green-700 px-3 py-1 rounded-lg text-xs font-bold">Easy</span>
+<span class="text-sm font-medium text-on-surface-variant">0.8ms</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>
