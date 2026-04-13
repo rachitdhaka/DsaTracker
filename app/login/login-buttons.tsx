@@ -2,6 +2,7 @@
 
 import { signInWithGoogle } from './actions'
 import { useState } from 'react'
+import { Button } from "@/components/ui/button"
 
 export function LoginButtons() {
   const [loading, setLoading] = useState<string | null>(null)
@@ -12,16 +13,18 @@ export function LoginButtons() {
   }
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-sm">
-      <button
+    <div className="flex justify-center w-full">
+      <Button
+        variant="outline"
+        size="icon"
         onClick={handleGoogleLogin}
         disabled={!!loading}
-        className="flex h-12 w-full items-center justify-center gap-3 rounded-xl bg-white text-black transition-all hover:bg-zinc-100 border border-zinc-200 disabled:opacity-50 font-medium shadow-sm hover:shadow-md active:scale-[0.98]"
+        className="size-12 rounded-full border-border bg-surface-container-low hover:bg-surface-container transition-all active:scale-[0.98] shadow-sm"
       >
         {loading === 'google' ? (
-          <div className="h-5 w-5 animate-spin rounded-full border-2 border-zinc-950 border-t-transparent" />
+          <div className="size-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
         ) : (
-          <svg className="h-5 w-5" viewBox="0 0 24 24">
+          <svg className="size-5" viewBox="0 0 24 24">
             <path
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
               fill="#4285F4"
@@ -40,8 +43,7 @@ export function LoginButtons() {
             />
           </svg>
         )}
-        Continue with Google
-      </button>
+      </Button>
     </div>
   )
 }

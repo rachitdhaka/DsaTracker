@@ -39,7 +39,13 @@ export function TopicMastery({ topics }: { topics: any[] }) {
       <div className="flex items-end justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl  tracking-tight text-foreground">
-            Topic Mastery Matrix
+            Topic Mastery Matrix - <a
+                href="https://www.youtube.com/@LoveBabbar"
+                target="_blank"
+                className="text-foreground/90 hover:text-orange-500 font-medium"
+              >
+                Love Babbar's DSA sheet
+              </a>
           </h2>
           <p className="text-sm text-muted-foreground font-medium">
             Your architectural journey through data structures.

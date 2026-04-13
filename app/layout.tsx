@@ -34,7 +34,7 @@ export default async function RootLayout({
       className={`${geistSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className={`min-h-full flex flex-col ${geistSans.className}`}>
+      <body className={`min-h-full flex flex-col selection:bg-yellow-400 selection:text-black ${geistSans.className}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
