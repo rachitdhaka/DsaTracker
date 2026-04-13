@@ -54,7 +54,7 @@ export function TopicMastery({ topics }: { topics: any[] }) {
         
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
         {topics.map((topic, i) => {
           const Icon = TOPIC_ICONS[topic.name] || BarChart2;
           const percentage =
