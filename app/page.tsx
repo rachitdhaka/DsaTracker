@@ -31,22 +31,22 @@ export default async function Page() {
       <main className="relative z-10 flex flex-col items-center text-center gap-12 max-w-2xl animate-in fade-in slide-in-from-bottom-6 duration-1000 ease-out">
         <div className="flex flex-col gap-5">
           <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-foreground/90 leading-tight">
-            Solving problems you'll probably never use at work
+            The Ultimate Love Babbar 450 DSA Sheet Tracker
           </h1>
           <div className="flex flex-col">
             <p className="text-sm md:text-base text-muted-foreground/80 font-medium max-w-sm mx-auto leading-relaxed">
-              Tracking the legendary 450+ problems from
+              Master the legendary 450+ data structures and algorithms questions from 
               <br />
               <a
                 href="https://www.youtube.com/@LoveBabbar"
                 target="_blank"
                 className="text-foreground/90 font-medium"
               >
-                Love Babbar's DSA sheet
+                Love Babbar's famous DSA sheet
               </a>
             </p>
             <p className="text-sm md:text-base text-muted-foreground/50 font-small max-w-sm mx-auto leading-relaxed">
-              All credits to the man himself for the list.
+              Track your progress, save notes, and prepare for top-tier tech interviews.
             </p>
           </div>
         </div>
