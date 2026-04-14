@@ -35,6 +35,9 @@ export function constructMetadata({
     },
     description,
     keywords: siteConfig.keywords,
+    alternates: {
+      canonical: siteConfig.url,
+    },
     openGraph: {
       type: "website",
       locale: "en_US",
@@ -56,14 +59,23 @@ export function constructMetadata({
       title,
       description,
       images: [image],
-      creator: "@rachitdhaka" // Placeholder, should be user's handle
+      creator: "@rachitdhaka"
     },
     icons: {
       icon: "/favicon.ico",
       shortcut: "/favicon.ico",
       apple: "/apple-touch-icon.png"
     },
+    manifest: `${siteConfig.url}/site.webmanifest`,
     metadataBase: new URL(siteConfig.url),
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "default",
+      title: title,
+    },
+    formatDetection: {
+      telephone: false,
+    },
     ...(noIndex && {
       robots: {
         index: false,
