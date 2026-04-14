@@ -53,6 +53,9 @@ export default async function RootLayout({
             })
           }}
         />
+        {/* Explicit OG tags for immediate platform recognition */}
+        <meta property="og:image" content="https://dsatracker.vercel.app/og.png" />
+        <meta name="twitter:image" content="https://dsatracker.vercel.app/og.png" />
       </head>
       <body className="min-h-full flex flex-col selection:bg-yellow-100 selection:text-black font-sans">
         <ThemeProvider
