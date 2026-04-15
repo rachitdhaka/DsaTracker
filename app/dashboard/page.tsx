@@ -66,7 +66,30 @@ export default async function DashboardPage() {
     }
   });
 
-  const topicsArray = Object.values(topicMap);
+  const TOPIC_ORDER = [
+    "Array",
+    "Matrix",
+    "String",
+    "Searching & Sorting",
+    "LinkedList",
+    "Binary Trees",
+    "Binary Search Trees",
+    "Greedy",
+    "BackTracking",
+    "Stacks & Queues",
+    "Heap",
+    "Graph",
+    "Trie",
+    "Dynamic Programming",
+    "Bit Manipulation",
+  ];
+
+  const topicsArray = Object.values(topicMap).sort((a, b) => {
+    const indexA = TOPIC_ORDER.indexOf(a.name);
+    const indexB = TOPIC_ORDER.indexOf(b.name);
+    // If topic is not in our list, put it at the end
+    return (indexA === -1 ? 99 : indexA) - (indexB === -1 ? 99 : indexB);
+  });
   const totalSolved = solvedIds.size;
   const totalQuestions = questions?.length || 0;
 
