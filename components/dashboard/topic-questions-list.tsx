@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { CheckCircle2, ChevronRight, ExternalLink, ArrowLeft } from "lucide-react";
+import { CheckCircle2, ChevronRight, ExternalLink, ArrowLeft, Globe } from "lucide-react";
 import { toggleQuestionStatus } from "@/app/dashboard/actions";
 
 interface Question {
   id: string;
   title: string;
-  link: string | null;
+  link: string | null;       // GFG Link
+  leetcode_link: string | null; // LeetCode Link
   topic: string;
 }
 
@@ -54,6 +55,27 @@ export function TopicQuestionsList({
       setLoadingId(null);
     }
   };
+
+  const GFGLogo = () => (
+    <svg 
+      viewBox="0 0 24 24" 
+      className="size-4 fill-[#2F8D46]"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13v2h2V7h-2zm0 4v6h2v-6h-2z" className="hidden"/>
+      <path d="M12.11 12.17c-.6-.28-1.25-.42-1.89-.42-1.31 0-2.41.45-3.3 1.34s-1.34 1.99-1.34 3.3c0 1.31.45 2.41 1.34 3.3.89.89 1.99 1.34 3.3 1.34.82 0 1.57-.19 2.25-.57v-2.53h-2.25v-1.55h3.81v4.61c-1.07.69-2.29 1.04-3.66 1.04-1.74 0-3.21-.62-4.41-1.85S4 17.5 4 15.75s.62-3.21 1.85-4.41C7.08 10.12 8.55 9.5 10.3 9.5c1.19 0 2.28.27 3.26.8l-1.45 1.87z" fill="currentColor"/>
+    </svg>
+  );
+
+  const LeetCodeLogo = () => (
+    <svg 
+      viewBox="0 0 24 24" 
+      className="size-4 fill-[#FFA116]"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M13.483 0a1.374 1.374 0 0 0-.961.41L7.116 5.45a1.375 1.374 0 0 0 0 1.945L11.777 12l-4.66 4.605a1.375 1.374 0 0 0 0 1.945l5.406 5.04a1.374 1.374 0 0 0 1.921-.043l4.66-4.605a1.375 1.374 0 0 0 0-1.945L14.444 12l4.66-4.605a1.375 1.374 0 0 0 0-1.945L13.737.41a1.374 1.374 0 0 0-.254-.41z"/>
+    </svg>
+  );
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-card rounded-xl border border-border shadow-sm overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom duration-500">
@@ -109,9 +131,9 @@ export function TopicQuestionsList({
                   </button>
 
                   <div className="flex-1 min-w-0">
-                    {q.link ? (
+                    {q.link || q.leetcode_link ? (
                       <a
-                        href={q.link}
+                        href={(q.leetcode_link || q.link)!}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="group/link block hover:underline decoration-primary/40 underline-offset-4"
@@ -128,16 +150,27 @@ export function TopicQuestionsList({
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 ml-4">
+                <div className="flex items-center gap-2 ml-4">
                   {q.link && (
                     <a
                       href={q.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-background text-muted-foreground hover:text-foreground transition-all border border-border"
-                      title="View Problem"
+                      className="p-2 rounded-lg bg-background text-muted-foreground hover:text-[#2F8D46] hover:bg-[#2F8D46]/10 transition-all border border-border group/gfg"
+                      title="GeeksforGeeks"
                     >
-                      <ExternalLink className="h-3.5 w-3.5" />
+                      <GFGLogo />
+                    </a>
+                  )}
+                  {q.leetcode_link && (
+                    <a
+                      href={q.leetcode_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg bg-background text-muted-foreground hover:text-[#FFA116] hover:bg-[#FFA116]/10 transition-all border border-border group/lc"
+                      title="LeetCode"
+                    >
+                      <LeetCodeLogo />
                     </a>
                   )}
                   <div className="p-1.5 rounded-lg border border-border group-hover:bg-muted transition-all">

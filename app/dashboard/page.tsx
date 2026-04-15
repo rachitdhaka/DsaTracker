@@ -23,7 +23,7 @@ export default async function DashboardPage() {
   // 2. Fetch all questions to calculate topic totals
   const { data: questions, error: questionsError } = await supabase
     .from("questions")
-    .select("id, topic, title, link");
+    .select("id, topic, title, link, leetcode_link");
 
   if (questionsError) {
     console.error("Error fetching questions:", questionsError.message);
