@@ -2,13 +2,19 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { CheckCircle2, ChevronRight, ExternalLink, ArrowLeft, Globe } from "lucide-react";
+import {
+  CheckCircle2,
+  ChevronRight,
+  ExternalLink,
+  ArrowLeft,
+  Globe,
+} from "lucide-react";
 import { toggleQuestionStatus } from "@/app/dashboard/actions";
 
 interface Question {
   id: string;
   title: string;
-  link: string | null;       // GFG Link
+  link: string | null; // GFG Link
   leetcode_link: string | null; // LeetCode Link
   topic: string;
 }
@@ -57,23 +63,44 @@ export function TopicQuestionsList({
   };
 
   const GFGLogo = () => (
-    <svg 
-      viewBox="0 0 24 24" 
+    <svg
+      viewBox="0 0 24 24"
       className="size-4 fill-[#2F8D46]"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13v2h2V7h-2zm0 4v6h2v-6h-2z" className="hidden"/>
-      <path d="M12.11 12.17c-.6-.28-1.25-.42-1.89-.42-1.31 0-2.41.45-3.3 1.34s-1.34 1.99-1.34 3.3c0 1.31.45 2.41 1.34 3.3.89.89 1.99 1.34 3.3 1.34.82 0 1.57-.19 2.25-.57v-2.53h-2.25v-1.55h3.81v4.61c-1.07.69-2.29 1.04-3.66 1.04-1.74 0-3.21-.62-4.41-1.85S4 17.5 4 15.75s.62-3.21 1.85-4.41C7.08 10.12 8.55 9.5 10.3 9.5c1.19 0 2.28.27 3.26.8l-1.45 1.87z" fill="currentColor"/>
+      <path
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13v2h2V7h-2zm0 4v6h2v-6h-2z"
+        className="hidden"
+      />
+      <path
+        d="M12.11 12.17c-.6-.28-1.25-.42-1.89-.42-1.31 0-2.41.45-3.3 1.34s-1.34 1.99-1.34 3.3c0 1.31.45 2.41 1.34 3.3.89.89 1.99 1.34 3.3 1.34.82 0 1.57-.19 2.25-.57v-2.53h-2.25v-1.55h3.81v4.61c-1.07.69-2.29 1.04-3.66 1.04-1.74 0-3.21-.62-4.41-1.85S4 17.5 4 15.75s.62-3.21 1.85-4.41C7.08 10.12 8.55 9.5 10.3 9.5c1.19 0 2.28.27 3.26.8l-1.45 1.87z"
+        fill="currentColor"
+      />
     </svg>
   );
 
   const LeetCodeLogo = () => (
-    <svg 
-      viewBox="0 0 120 120" 
+    <svg
+      viewBox="0 0 120 120"
       className="size-4 fill-[#FFA116]"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M60.8607 74.8886C63.1089 72.6437 66.7481 72.6496 68.989 74.9017C71.23 77.1538 71.2241 80.7994 68.976 83.0443L58.9929 93.0126C49.7828 102.209 34.7641 102.343 25.3986 93.3224C25.3445 93.2706 21.1743 89.1815 7.41705 75.6915C-1.73529 66.7174 -2.64709 52.3575 5.96552 43.1359L22.0236 25.9417C30.5715 16.7886 46.3283 15.7882 56.1015 23.6918L70.6861 35.4869C73.156 37.4844 73.5418 41.1094 71.5478 43.5836C69.5538 46.0578 65.9351 46.4442 63.4653 44.4468L48.8807 32.6518C43.7695 28.5183 34.8285 29.086 30.4181 33.8087L14.3598 51.0032C10.1669 55.4924 10.6261 62.7245 15.4581 67.4624C25.5603 77.3683 33.3459 85.0024 33.3549 85.011C38.224 89.7007 46.0969 89.6308 50.8776 84.857L60.8607 74.8886Z" fill="currentColor"/>
+      <path
+        d="M60.8607 74.8886C63.1089 72.6437 66.7481 72.6496 68.989 74.9017C71.23 77.1538 71.2241 80.7994 68.976 83.0443L58.9929 93.0126C49.7828 102.209 34.7641 102.343 25.3986 93.3224C25.3445 93.2706 21.1743 89.1815 7.41705 75.6915C-1.73529 66.7174 -2.64709 52.3575 5.96552 43.1359L22.0236 25.9417C30.5715 16.7886 46.3283 15.7882 56.1015 23.6918L70.6861 35.4869C73.156 37.4844 73.5418 41.1094 71.5478 43.5836C69.5538 46.0578 65.9351 46.4442 63.4653 44.4468L48.8807 32.6518C43.7695 28.5183 34.8285 29.086 30.4181 33.8087L14.3598 51.0032C10.1669 55.4924 10.6261 62.7245 15.4581 67.4624C25.5603 77.3683 33.3459 85.0024 33.3549 85.011C38.224 89.7007 46.0969 89.6308 50.8776 84.857L60.8607 74.8886Z"
+        fill="#FFA116"
+      ></path>
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M36.609 64.9129C33.4346 64.9129 30.8613 62.3351 30.8613 59.1553C30.8613 55.9754 33.4346 53.3976 36.609 53.3976H78.9977C82.172 53.3976 84.7453 55.9754 84.7453 59.1553C84.7453 62.3351 82.172 64.9129 78.9977 64.9129H36.609Z"
+        fill="#B3B3B3"
+      ></path>
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M44.5476 1.82415C46.7162 -0.497945 50.3534 -0.61927 52.6715 1.55317C54.9895 3.7256 55.1106 7.36914 52.942 9.69124L14.36 51.0033C10.167 55.4922 10.6262 62.7243 15.4578 67.4623L33.2755 84.9343C35.5439 87.1587 35.5828 90.804 33.3623 93.0764C31.1417 95.3488 27.5028 95.3877 25.2343 93.1633L7.41651 75.6912C-1.7353 66.7166 -2.64709 52.3568 5.9659 43.1359L44.5476 1.82415Z"
+        fill="#F5F5F5"
+      ></path>
     </svg>
   );
 
@@ -101,7 +128,9 @@ export function TopicQuestionsList({
       <div className="flex-1 overflow-y-auto p-8 space-y-4 custom-scrollbar">
         {questions.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-slate-500 dark:text-slate-400">No questions found for this topic.</p>
+            <p className="text-slate-500 dark:text-slate-400">
+              No questions found for this topic.
+            </p>
           </div>
         ) : (
           questions.map((q) => {
@@ -173,7 +202,6 @@ export function TopicQuestionsList({
                       <LeetCodeLogo />
                     </a>
                   )}
-                  
                 </div>
               </div>
             );
@@ -183,11 +211,10 @@ export function TopicQuestionsList({
 
       <footer className="p-6 border-t border-border bg-muted/20">
         <div className="flex justify-between items-center mb-4">
-          <span className="text-sm font-bold text-foreground">
-            Progress
-          </span>
+          <span className="text-sm font-bold text-foreground">Progress</span>
           <span className="text-sm font-bold text-primary">
-            {Math.round((solvedSet.size / questions.length) * 100) || 0}% Complete
+            {Math.round((solvedSet.size / questions.length) * 100) || 0}%
+            Complete
           </span>
         </div>
         <div className="w-full bg-muted h-2 rounded-full overflow-hidden">
