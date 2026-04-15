@@ -63,20 +63,11 @@ export function TopicQuestionsList({
   };
 
   const GFGLogo = () => (
-    <svg
-      viewBox="0 0 24 24"
-      className="size-4 fill-[#2F8D46]"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13v2h2V7h-2zm0 4v6h2v-6h-2z"
-        className="hidden"
-      />
-      <path
-        d="M12.11 12.17c-.6-.28-1.25-.42-1.89-.42-1.31 0-2.41.45-3.3 1.34s-1.34 1.99-1.34 3.3c0 1.31.45 2.41 1.34 3.3.89.89 1.99 1.34 3.3 1.34.82 0 1.57-.19 2.25-.57v-2.53h-2.25v-1.55h3.81v4.61c-1.07.69-2.29 1.04-3.66 1.04-1.74 0-3.21-.62-4.41-1.85S4 17.5 4 15.75s.62-3.21 1.85-4.41C7.08 10.12 8.55 9.5 10.3 9.5c1.19 0 2.28.27 3.26.8l-1.45 1.87z"
-        fill="currentColor"
-      />
-    </svg>
+    <img
+      src="https://media.geeksforgeeks.org/gfg-gg-logo.svg"
+      alt="GFG"
+      className="size-4"
+    />
   );
 
   const LeetCodeLogo = () => (
@@ -196,7 +187,7 @@ export function TopicQuestionsList({
                       href={q.leetcode_link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-background text-muted-foreground hover:text-[#FFA116] hover:bg-[#FFA116]/10 transition-all border border-border group/lc"
+                      className="p-2 rounded-lg bg-black text-muted-foreground hover:text-[#FFA116] hover:bg-[#FFA116]/10 transition-all border border-border group/lc"
                       title="LeetCode"
                     >
                       <LeetCodeLogo />
