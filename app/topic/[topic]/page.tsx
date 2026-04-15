@@ -32,7 +32,8 @@ export default async function TopicPage({
   const { data: questions, error: questionsError } = await supabase
     .from("questions")
     .select("*")
-    .ilike("topic", readableTopic);
+    .ilike("topic", readableTopic)
+    .order("order_index", { ascending: true });
 
   if (questionsError || !questions) {
     console.error("Error fetching questions:", questionsError?.message);

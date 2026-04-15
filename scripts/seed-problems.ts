@@ -56,8 +56,13 @@ async function seed() {
       }
       parts.push(currentPart.trim());
 
-      const [topic, title, link] = parts;
-      return { topic, title, link: link || null };
+      const [topic, title, link, index] = parts;
+      return { 
+        topic, 
+        title, 
+        link: link || null, 
+        order_index: index ? parseInt(index.trim()) : 0 
+      };
     })
     .filter(q => q.topic && q.title);
 

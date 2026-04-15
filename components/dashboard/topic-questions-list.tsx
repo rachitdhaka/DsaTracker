@@ -109,9 +109,22 @@ export function TopicQuestionsList({
                   </button>
 
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-[15px] font-semibold truncate text-foreground">
-                      {q.title}
-                    </h3>
+                    {q.link ? (
+                      <a
+                        href={q.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/link block hover:underline decoration-primary/40 underline-offset-4"
+                      >
+                        <h3 className="text-[15px] font-semibold truncate text-foreground group-hover/link:text-primary transition-colors">
+                          {q.title}
+                        </h3>
+                      </a>
+                    ) : (
+                      <h3 className="text-[15px] font-semibold truncate text-foreground">
+                        {q.title}
+                      </h3>
+                    )}
                   </div>
                 </div>
 
