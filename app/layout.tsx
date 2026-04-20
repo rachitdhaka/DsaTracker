@@ -9,22 +9,22 @@ import { ThemeProvider } from "@/components/theme-provider";
 const fontSans = "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
 
 export const metadata: Metadata = {
-  title: 'DSA Tracker',
-  description: 'Companion tool for Love Babbar\'s 450 DSA Sheet. track progress on 450+ data structures and algorithms questions.',
+  title: 'DSA Tracker | Love Babbar 450 DSA Sheet Progress & Prep',
+  description: 'The ultimate companion tool for Love Babbar\'s 450 DSA Sheet. Master algorithms, track your progress, and ace your software engineering interviews with ease.',
   openGraph: {
-    title: 'DSA Tracker',
-    description: 'Track your progress on Love Babbar\'s 450 DSA Sheet.',
+    title: 'DSA Tracker | Love Babbar 450 DSA Sheet Progress & Prep',
+    description: 'Master data structures and algorithms with the ultimate Love Babbar 450 Sheet tracker. Monitor your solved problems and prepare for top-tier interviews.',
     images: [{
       url: '/og.png',
       width: 1200,
       height: 630,
-      alt: 'DSA Tracker Preview'
+      alt: 'DSA Tracker - Start Your Interview Preparation Now'
     }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'DSA Tracker',
-    description: 'Track your progress on Love Babbar\'s 450 DSA Sheet.',
+    title: 'DSA Tracker | Love Babbar 450 DSA Sheet Progress & Prep',
+    description: 'Master data structures and algorithms with the ultimate Love Babbar 450 Sheet tracker. Monitor your solved problems and prepare for top-tier interviews.',
     images: ['/og.png'],
   },
 }
