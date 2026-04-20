@@ -1,17 +1,33 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+
 import "./globals.css";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { AuthBanner } from "@/components/auth-banner";
 import { ThemeProvider } from "@/components/theme-provider";
 
-// Optimized system font stack to avoid build-time Google Font connection issues
 const fontSans = "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
 
-import { constructMetadata } from "@/lib/seo";
-
-export const metadata = constructMetadata();
+export const metadata: Metadata = {
+  title: 'DSA Tracker',
+  description: 'Companion tool for Love Babbar\'s 450 DSA Sheet. track progress on 450+ data structures and algorithms questions.',
+  openGraph: {
+    title: 'DSA Tracker',
+    description: 'Track your progress on Love Babbar\'s 450 DSA Sheet.',
+    images: [{
+      url: '/og.png',
+      width: 1200,
+      height: 630,
+      alt: 'DSA Tracker Preview'
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DSA Tracker',
+    description: 'Track your progress on Love Babbar\'s 450 DSA Sheet.',
+    images: ['/og.png'],
+  },
+}
 
 export default async function RootLayout({
   children,
@@ -53,9 +69,6 @@ export default async function RootLayout({
             })
           }}
         />
-        {/* Explicit OG tags for immediate platform recognition */}
-        <meta property="og:image" content="https://dsatracker.vercel.app/og.png" />
-        <meta name="twitter:image" content="https://dsatracker.vercel.app/og.png" />
       </head>
       <body className="min-h-full flex flex-col selection:bg-yellow-100 selection:text-black font-sans">
         <ThemeProvider
