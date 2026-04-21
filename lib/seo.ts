@@ -3,8 +3,8 @@ import { Metadata } from "next";
 export const siteConfig = {
   name: "DSA Tracker",
   description: "The ultimate companion for Love Babbar's 450 DSA Sheet. Track your progress, solve problems, and ace your software engineering interviews.",
-  url: "https://dsatracker.vercel.app", // Fallback URL, ideally replaced by user's custom domain
-  ogImage: "https://dsatracker.vercel.app/og.png",
+  url: "https://dsatracker-450babbar.vercel.app", // Fallback URL, ideally replaced by user's custom domain
+  ogImage: "https://dsatracker-450babbar.vercel.app/og.png",
   keywords: [
     "Love Babbar DSA Sheet",
     "450 DSA Questions",
