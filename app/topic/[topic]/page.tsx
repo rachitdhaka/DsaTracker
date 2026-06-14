@@ -47,6 +47,11 @@ export default async function TopicPage({
 
   const solvedIds = solvedData?.map((s) => s.question_id) || [];
 
+  // 4. Fetch overall total questions count
+  const { count: totalQuestionsCount } = await supabase
+    .from("questions")
+    .select("*", { count: "exact", head: true });
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar user={user} />
@@ -56,6 +61,7 @@ export default async function TopicPage({
           topicName={questions?.[0]?.topic || readableTopic}
           questions={questions || []}
           solvedIds={solvedIds}
+          totalQuestionsCount={totalQuestionsCount || 438}
         />
       </main>
     </div>
