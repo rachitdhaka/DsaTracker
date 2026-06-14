@@ -66,8 +66,7 @@ export function QuestionsExplorer({
   questions = [],
   solvedIds = []
 }: QuestionsExplorerProps) {
-  // Tabs and general state
-  const [selectedTab, setSelectedTab] = useState<"all" | "saved">("all");
+  // General state
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTopics, setSelectedTopics] = useState<Set<string>>(new Set());
   const [currentPage, setCurrentPage] = useState(1);
@@ -176,43 +175,25 @@ export function QuestionsExplorer({
     return "Hard";
   };
 
-  // Deterministic helper for acceptance rate mapping (matches reference image percentages)
-  const getAcceptanceRate = (title: string, index: number): string => {
-    const lower = title.toLowerCase();
-    if (lower.includes("reverse a vector") || lower.includes("reverse the array")) return "38%";
-    if (lower.includes("maximum element")) return "35%";
-    if (lower.includes("rotate an array")) return "26%";
-    if (lower.includes("maximum subarray")) return "30%";
-    if (index === 2 || index === 3 || index === 4 || index === 5 || index === 8 || index === 9) {
-      return "0%";
-    }
-    
-    // Fallback deterministic rates
-    const rates = ["41%", "32%", "48%", "52%", "29%", "0%", "36%"];
-    return rates[(title.length + index) % rates.length];
-  };
+
 
   // Filter questions on client side
   const filteredQuestions = useMemo(() => {
     return questions.filter((q) => {
-      // 1. Tab filter ("Saved Questions")
-      if (selectedTab === "saved" && !bookmarkedSet.has(q.id)) {
-        return false;
-      }
-      // 2. Search query filter
+      // 1. Search query filter
       if (
         searchQuery &&
         !q.title.toLowerCase().includes(searchQuery.toLowerCase())
       ) {
         return false;
       }
-      // 3. Multi-topic filter
+      // 2. Multi-topic filter
       if (selectedTopics.size > 0 && !selectedTopics.has(q.topic)) {
         return false;
       }
       return true;
     });
-  }, [questions, selectedTab, searchQuery, selectedTopics, bookmarkedSet]);
+  }, [questions, searchQuery, selectedTopics]);
 
   // Pagination bounds
   const totalCount = filteredQuestions.length;
@@ -261,39 +242,8 @@ export function QuestionsExplorer({
   return (
     <div className="w-full flex flex-col gap-6 animate-in fade-in duration-500 pb-16">
       
-      {/* Top Header Row with Tabs and Search */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        {/* Left Side Tabs */}
-        <div className="flex gap-1.5 bg-zinc-100 p-1.5 rounded-xl border border-zinc-200/50 shadow-sm select-none">
-          <button
-            onClick={() => {
-              setSelectedTab("all");
-              setCurrentPage(1);
-            }}
-            className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer ${
-              selectedTab === "all"
-                ? "bg-white text-zinc-900 shadow-sm"
-                : "text-zinc-500 hover:text-zinc-800"
-            }`}
-          >
-            All Questions
-          </button>
-          <button
-            onClick={() => {
-              setSelectedTab("saved");
-              setCurrentPage(1);
-            }}
-            className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer ${
-              selectedTab === "saved"
-                ? "bg-white text-zinc-900 shadow-sm"
-                : "text-zinc-500 hover:text-zinc-800"
-            }`}
-          >
-            Saved Questions
-          </button>
-        </div>
-
-        {/* Right Side Search Bar */}
+      {/* Search Bar Row */}
+      <div className="flex items-center justify-between w-full">
         <div className="relative w-full md:w-80 shadow-sm">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
           <input
@@ -371,7 +321,7 @@ export function QuestionsExplorer({
           <div className="min-w-[900px] flex flex-col">
             
             {/* Table Header Row */}
-            <div className="grid grid-cols-[80px_1fr_100px_120px_120px_80px] items-center px-6 py-4 border-b border-zinc-100 bg-white select-none">
+            <div className="grid grid-cols-[80px_1fr_100px_120px_80px] items-center px-6 py-4 border-b border-zinc-100 bg-white select-none">
               <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
                 Done
               </span>
@@ -380,9 +330,6 @@ export function QuestionsExplorer({
               </span>
               <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
                 Links
-              </span>
-              <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
-                Acceptance
               </span>
               <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
                 Difficulty
@@ -408,12 +355,11 @@ export function QuestionsExplorer({
                 const isLocked = false;
 
                 const difficulty = getDifficulty(q.title, globalIndex);
-                const acceptance = getAcceptanceRate(q.title, globalIndex);
 
                 return (
                   <div
                     key={q.id}
-                    className={`grid grid-cols-[80px_1fr_100px_120px_120px_80px] items-center px-6 py-4.5 transition-colors duration-200 ${
+                    className={`grid grid-cols-[80px_1fr_100px_120px_80px] items-center px-6 py-4.5 transition-colors duration-200 ${
                       relativeIndex % 2 === 0 ? "bg-[#fafafa]" : "bg-white"
                     } hover:bg-zinc-50/80`}
                   >
@@ -480,12 +426,7 @@ export function QuestionsExplorer({
                       )}
                     </div>
 
-                    {/* Column 4: Acceptance Rate */}
-                    <div className="text-center text-sm font-medium text-zinc-400 select-none">
-                      {acceptance}
-                    </div>
-
-                    {/* Column 5: Difficulty */}
+                    {/* Column 4: Difficulty */}
                     <div className="flex justify-center items-center">
                       {difficulty === "Easy" && (
                         <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#E6F4EA] text-[#137333] select-none shadow-[0_1px_2px_rgba(0,0,0,0.01)] border border-[#C2E7C7]/40">
