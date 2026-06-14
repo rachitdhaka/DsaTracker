@@ -24,46 +24,6 @@ export default async function TopicPage({
     return redirect("/login");
   }
 
-  // 2. Fetch questions for this topic
-  // We use ilike to be case-insensitive and handle the slug comparison
-  // Note: unslugify helps but we might need a more robust match
-  const readableTopic = unslugify(topicParam);
-  
-  const { data: questions, error: questionsError } = await supabase
-    .from("questions")
-    .select("*")
-    .ilike("topic", readableTopic)
-    .order("order_index", { ascending: true });
-
-  if (questionsError || !questions) {
-    console.error("Error fetching questions:", questionsError?.message);
-  }
-
-  // 3. Fetch user progress
-  const { data: solvedData } = await supabase
-    .from("user_progress")
-    .select("question_id")
-    .eq("user_id", user.id);
-
-  const solvedIds = solvedData?.map((s) => s.question_id) || [];
-
-  // 4. Fetch overall total questions count
-  const { count: totalQuestionsCount } = await supabase
-    .from("questions")
-    .select("*", { count: "exact", head: true });
-
-  return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Navbar user={user} />
-
-      <main className="pt-24 pb-12 px-6 max-w-7xl mx-auto">
-        <TopicQuestionsList
-          topicName={questions?.[0]?.topic || readableTopic}
-          questions={questions || []}
-          solvedIds={solvedIds}
-          totalQuestionsCount={totalQuestionsCount || 438}
-        />
-      </main>
-    </div>
-  );
+  // Redirect to the unified dashboard explorer
+  return redirect("/dashboard");
 }
