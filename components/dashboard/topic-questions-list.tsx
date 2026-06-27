@@ -2,12 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-  Check,
-  Lock,
-  Bookmark,
-  ArrowLeft
-} from "lucide-react";
+import { Check, Lock, Bookmark, ArrowLeft } from "lucide-react";
 import { toggleQuestionStatus } from "@/app/dashboard/actions";
 
 interface Question {
@@ -27,17 +22,17 @@ interface TopicQuestionsListProps {
 
 // Custom SVG GFG Logo matching reference image (pure green "gG" letter styling)
 const GFGLogo = () => (
-  <span className="text-[#2F8D46] font-extrabold text-[15px] tracking-tight hover:scale-105 transition-transform duration-200 select-none">
+  <span className="text-[#2F8D46] font-extrabold text-[15px] tracking-tight hover:scale-105 transition-all duration-200 select-none">
     gG
   </span>
 );
 
 // Custom SVG LeetCode Logo matching reference image (black circular container, white LeetCode symbol)
 const LeetCodeLogo = () => (
-  <div className="size-7 rounded-full bg-[#1A1A1A] flex items-center justify-center shadow-sm hover:bg-black transition-colors duration-200 hover:scale-105 transition-transform">
+  <div className="size-7 rounded-full bg-[#1A1A1A] flex items-center justify-center shadow-sm hover:bg-black transition-all duration-200 hover:scale-105">
     <svg
       viewBox="0 0 120 120"
-      className="size-[14px]"
+      className="size-3.5"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -61,10 +56,9 @@ const LeetCodeLogo = () => (
 );
 
 export function TopicQuestionsList({
-  topicName,
   questions,
   solvedIds,
-  totalQuestionsCount
+  totalQuestionsCount,
 }: TopicQuestionsListProps) {
   const [solvedSet, setSolvedSet] = useState<Set<string>>(new Set(solvedIds));
   const [loadingId, setLoadingId] = useState<string | null>(null);
@@ -119,14 +113,20 @@ export function TopicQuestionsList({
       newBookmarks.add(qId);
     }
     setBookmarkedSet(newBookmarks);
-    localStorage.setItem("dsa_bookmarks", JSON.stringify(Array.from(newBookmarks)));
+    localStorage.setItem(
+      "dsa_bookmarks",
+      JSON.stringify(Array.from(newBookmarks)),
+    );
   };
 
   // Deterministic helper for difficulty to match reference image (and fallback for others)
-  const getDifficulty = (title: string, index: number): "Easy" | "Medium" | "Hard" => {
+  const getDifficulty = (
+    title: string,
+    index: number,
+  ): "Easy" | "Medium" | "Hard" => {
     if (index === 0 || index === 1) return "Easy";
     if (index >= 2 && index <= 9) return "Medium";
-    
+
     // Fallback deterministic logic for other questions
     const hash = title.length + index;
     if (hash % 3 === 0) return "Easy";
@@ -154,7 +154,13 @@ export function TopicQuestionsList({
 
   // Total solved count across the entire sheet
   const overallSolvedCount = solvedSet.size;
-  const progressPercentage = Math.round((overallSolvedCount / totalQuestionsCount) * 100) || 0;
+  const progressPercentage =
+    totalQuestionsCount > 0
+      ? Math.min(
+          100,
+          Math.max(0, (overallSolvedCount / totalQuestionsCount) * 100),
+        )
+      : 0;
 
   return (
     <div className="w-full max-w-5xl mx-auto flex flex-col gap-6 animate-in fade-in duration-500 pb-16">
@@ -162,61 +168,60 @@ export function TopicQuestionsList({
       <div className="flex items-center">
         <Link
           href="/dashboard"
-          className="inline-flex items-center text-sm font-medium text-zinc-400 hover:text-zinc-700 transition-colors gap-2 group"
+          className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors gap-2 group"
         >
-          <ArrowLeft className="h-4 w-4 text-zinc-400 group-hover:text-zinc-700 transition-colors" />
+          <ArrowLeft className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
           <span>Back to Dashboard</span>
         </Link>
       </div>
 
       {/* Top Card: Progress Card */}
-      <div className="w-full bg-white rounded-2xl border border-zinc-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.02)] p-6">
+      <div className="w-full bg-card rounded-2xl border border-border/70 shadow-[0_2px_8px_rgba(0,0,0,0.02)] p-6">
         <div className="flex items-center justify-between mb-3.5">
-          <span className="text-[15px] font-semibold text-zinc-800 tracking-tight">
+          <span className="text-[15px] font-semibold text-foreground tracking-tight">
             Total Progress
           </span>
-          <span className="text-[14px] font-medium text-zinc-400">
+          <span className="text-[14px] font-medium text-muted-foreground">
             {overallSolvedCount}/{totalQuestionsCount} Problems
           </span>
         </div>
-        <div className="w-full bg-[#f3f4f6] h-2.5 rounded-full overflow-hidden">
+        <div className="w-full bg-muted h-2.5 rounded-full overflow-hidden">
           <div
-            className="h-full bg-[#9ca3af] rounded-full transition-all duration-500 ease-out"
+            className="h-full rounded-full bg-linear-to-r from-chart-1 to-chart-2 transition-all duration-500 ease-out"
             style={{ width: `${progressPercentage}%` }}
           />
         </div>
       </div>
 
       {/* Main Card: Questions Table Card */}
-      <div className="w-full bg-white rounded-2xl border border-zinc-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
+      <div className="w-full bg-card rounded-2xl border border-border/70 shadow-[0_2px_8px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
         <div className="w-full overflow-x-auto">
-          <div className="min-w-[800px] flex flex-col">
-            
+          <div className="min-w-200 flex flex-col">
             {/* Table Header Row */}
-            <div className="grid grid-cols-[80px_1fr_100px_120px_120px_80px] items-center px-6 py-4 border-b border-zinc-100 bg-white select-none">
-              <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
+            <div className="grid grid-cols-[80px_1fr_100px_120px_120px_80px] items-center px-6 py-4 border-b border-border/60 bg-card select-none">
+              <span className="text-xs font-semibold text-muted-foreground text-center uppercase tracking-wider">
                 Done
               </span>
-              <span className="text-xs font-semibold text-zinc-400 text-left uppercase tracking-wider">
+              <span className="text-xs font-semibold text-muted-foreground text-left uppercase tracking-wider">
                 Problem
               </span>
-              <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
+              <span className="text-xs font-semibold text-muted-foreground text-center uppercase tracking-wider">
                 Links
               </span>
-              <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
+              <span className="text-xs font-semibold text-muted-foreground text-center uppercase tracking-wider">
                 Acceptance
               </span>
-              <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
+              <span className="text-xs font-semibold text-muted-foreground text-center uppercase tracking-wider">
                 Difficulty
               </span>
-              <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
+              <span className="text-xs font-semibold text-muted-foreground text-center uppercase tracking-wider">
                 Bookmark
               </span>
             </div>
 
             {/* Table Body Rows */}
             {questions.length === 0 ? (
-              <div className="text-center py-16 text-zinc-400 bg-[#fafafa]">
+              <div className="text-center py-16 text-muted-foreground bg-muted/30">
                 No questions found for this topic.
               </div>
             ) : (
@@ -224,11 +229,12 @@ export function TopicQuestionsList({
                 const isSolved = solvedSet.has(q.id);
                 const isLoading = loadingId === q.id;
                 const isBookmarked = bookmarkedSet.has(q.id);
-                
+
                 // Dynamic sequential lock mechanism:
                 // First two rows are always unlocked.
                 // Subsequent rows are locked unless the previous row is solved.
-                const isLocked = index >= 2 && !solvedSet.has(questions[index - 1]?.id);
+                const isLocked =
+                  index >= 2 && !solvedSet.has(questions[index - 1]?.id);
 
                 const difficulty = getDifficulty(q.title, index);
                 const acceptance = getAcceptanceRate(index);
@@ -237,24 +243,26 @@ export function TopicQuestionsList({
                   <div
                     key={q.id}
                     className={`grid grid-cols-[80px_1fr_100px_120px_120px_80px] items-center px-6 py-4.5 transition-colors duration-200 ${
-                      index % 2 === 0 ? "bg-[#fafafa]" : "bg-white"
-                    } hover:bg-zinc-50/80`}
+                      index % 2 === 0 ? "bg-muted/30" : "bg-card"
+                    } hover:bg-accent/50`}
                   >
                     {/* Column 1: Done Status (Checkbox or Lock Icon) */}
                     <div className="flex justify-center items-center">
                       {isLocked ? (
-                        <Lock className="h-[18px] w-[18px] text-zinc-300 stroke-[2.2]" />
+                        <Lock className="h-4.5 w-4.5 text-muted-foreground/50 stroke-[2.2]" />
                       ) : (
                         <button
                           onClick={() => !isLoading && handleToggle(q.id)}
                           disabled={isLoading}
                           className={`h-5 w-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
                             isSolved
-                              ? "bg-zinc-800 border-zinc-800 text-white"
-                              : "border-zinc-300 hover:border-zinc-500 bg-white"
+                              ? "bg-primary border-primary text-primary-foreground"
+                              : "border-border bg-background hover:border-foreground/30"
                           } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
-                          {isSolved && <Check className="h-3.5 w-3.5 stroke-[3.2]" />}
+                          {isSolved && (
+                            <Check className="h-3.5 w-3.5 stroke-[3.2]" />
+                          )}
                         </button>
                       )}
                     </div>
@@ -262,7 +270,7 @@ export function TopicQuestionsList({
                     {/* Column 2: Problem Title (Linked if Unlocked, Faded static text if Locked) */}
                     <div className="text-left pr-4">
                       {isLocked ? (
-                        <span className="text-[15px] font-medium text-zinc-300 select-none">
+                        <span className="text-[15px] font-medium text-muted-foreground/50 select-none">
                           {q.title}
                         </span>
                       ) : (
@@ -270,7 +278,7 @@ export function TopicQuestionsList({
                           href={(q.leetcode_link || q.link || "#")!}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[15px] font-semibold text-zinc-800 hover:text-zinc-950 hover:underline underline-offset-4 decoration-zinc-400 transition-colors"
+                          className="text-[15px] font-semibold text-foreground hover:text-foreground/80 hover:underline underline-offset-4 decoration-muted-foreground transition-colors"
                         >
                           {q.title}
                         </a>
@@ -299,12 +307,14 @@ export function TopicQuestionsList({
                           <GFGLogo />
                         </a>
                       ) : (
-                        <span className="text-zinc-300 text-sm font-medium select-none">—</span>
+                        <span className="text-muted-foreground/50 text-sm font-medium select-none">
+                          —
+                        </span>
                       )}
                     </div>
 
                     {/* Column 4: Acceptance Rate */}
-                    <div className="text-center text-sm font-medium text-zinc-400 select-none">
+                    <div className="text-center text-sm font-medium text-muted-foreground select-none">
                       {acceptance}
                     </div>
 
@@ -331,14 +341,16 @@ export function TopicQuestionsList({
                     <div className="flex justify-center items-center">
                       <button
                         onClick={() => toggleBookmark(q.id)}
-                        className="p-1 hover:bg-zinc-50 rounded-full transition-colors group cursor-pointer"
-                        title={isBookmarked ? "Remove Bookmark" : "Bookmark Problem"}
+                        className="p-1 hover:bg-muted rounded-full transition-colors group cursor-pointer"
+                        title={
+                          isBookmarked ? "Remove Bookmark" : "Bookmark Problem"
+                        }
                       >
                         <Bookmark
-                          className={`h-[18px] w-[18px] stroke-[1.8] transition-all duration-200 ${
+                          className={`h-4.5 w-4.5 stroke-[1.8] transition-all duration-200 ${
                             isBookmarked
                               ? "fill-amber-500 text-amber-500 scale-105"
-                              : "text-zinc-300 group-hover:text-zinc-500"
+                              : "text-muted-foreground/50 group-hover:text-foreground"
                           }`}
                         />
                       </button>
@@ -347,7 +359,6 @@ export function TopicQuestionsList({
                 );
               })
             )}
-
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ import {
   Bookmark,
   Search,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
 } from "lucide-react";
 import { toggleQuestionStatus } from "@/app/dashboard/actions";
 
@@ -21,24 +21,24 @@ interface Question {
 }
 
 interface QuestionsExplorerProps {
-  user: any;
+  user: unknown;
   questions: Question[];
   solvedIds: string[];
 }
 
 // Custom SVG GFG Logo matching reference image (pure green "gG" letter styling)
 const GFGLogo = () => (
-  <span className="text-[#2F8D46] font-extrabold text-[15px] tracking-tight hover:scale-105 transition-transform duration-200 select-none">
+  <span className="text-[#2F8D46] font-extrabold text-[15px] tracking-tight hover:scale-105 transition-all duration-200 select-none">
     gG
   </span>
 );
 
 // Custom SVG LeetCode Logo matching reference image (black circular container, white LeetCode symbol)
 const LeetCodeLogo = () => (
-  <div className="size-7 rounded-full bg-[#1A1A1A] flex items-center justify-center shadow-sm hover:bg-black transition-colors duration-200 hover:scale-105 transition-transform">
+  <div className="size-7 rounded-full bg-[#1A1A1A] flex items-center justify-center shadow-sm hover:bg-black transition-all duration-200 hover:scale-105">
     <svg
       viewBox="0 0 120 120"
-      className="size-[14px]"
+      className="size-3.5"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -62,9 +62,8 @@ const LeetCodeLogo = () => (
 );
 
 export function QuestionsExplorer({
-  user,
   questions = [],
-  solvedIds = []
+  solvedIds = [],
 }: QuestionsExplorerProps) {
   // General state
   const [searchQuery, setSearchQuery] = useState("");
@@ -103,7 +102,6 @@ export function QuestionsExplorer({
     return Array.from(topics).sort();
   }, [questions]);
 
-
   // Handle Solved Checkbox Toggles
   const handleToggleSolved = async (qId: string) => {
     const isCurrentlySolved = solvedSet.has(qId);
@@ -140,7 +138,7 @@ export function QuestionsExplorer({
     setBookmarkedSet(newBookmarks);
     localStorage.setItem(
       "dsa_bookmarks",
-      JSON.stringify(Array.from(newBookmarks))
+      JSON.stringify(Array.from(newBookmarks)),
     );
   };
 
@@ -163,19 +161,21 @@ export function QuestionsExplorer({
   };
 
   // Deterministic helper for difficulty mapping (matches reference image index 0-1 Easy, 2-9 Medium, etc.)
-  const getDifficulty = (title: string, index: number): "Easy" | "Medium" | "Hard" => {
+  const getDifficulty = (
+    title: string,
+    index: number,
+  ): "Easy" | "Medium" | "Hard" => {
     const lower = title.toLowerCase();
-    if (lower.includes("reverse") || lower.includes("maximum") || index < 2) return "Easy";
+    if (lower.includes("reverse") || lower.includes("maximum") || index < 2)
+      return "Easy";
     if (index >= 2 && index <= 9) return "Medium";
-    
+
     // Fallback deterministic difficulty
     const hash = title.length + index;
     if (hash % 3 === 0) return "Easy";
     if (hash % 3 === 1) return "Medium";
     return "Hard";
   };
-
-
 
   // Filter questions on client side
   const filteredQuestions = useMemo(() => {
@@ -215,8 +215,11 @@ export function QuestionsExplorer({
 
   // Progress calculations
   const totalSolvedCount = solvedSet.size;
-  const overallTotalCount = questions.length || 438;
-  const progressPercentage = Math.round((totalSolvedCount / overallTotalCount) * 100) || 0;
+  const overallTotalCount = questions.length;
+  const progressPercentage =
+    overallTotalCount > 0
+      ? Math.min(100, Math.max(0, (totalSolvedCount / overallTotalCount) * 100))
+      : 0;
 
   // Pagination Helper numbers array generator
   const pageNumbers = useMemo(() => {
@@ -226,13 +229,13 @@ export function QuestionsExplorer({
     } else {
       pages.push(1);
       if (currentPage > 3) pages.push("...");
-      
+
       const start = Math.max(2, currentPage - 1);
       const end = Math.min(totalPages - 1, currentPage + 1);
       for (let i = start; i <= end; i++) {
         pages.push(i);
       }
-      
+
       if (currentPage < totalPages - 2) pages.push("...");
       pages.push(totalPages);
     }
@@ -241,11 +244,10 @@ export function QuestionsExplorer({
 
   return (
     <div className="w-full flex flex-col gap-6 animate-in fade-in duration-500 pb-16">
-      
       {/* Search Bar Row */}
       <div className="flex items-center justify-between w-full">
         <div className="relative w-full md:w-80 shadow-sm">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
             type="text"
             placeholder="Search questions by name..."
@@ -254,35 +256,35 @@ export function QuestionsExplorer({
               setSearchQuery(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full pl-10 pr-4 py-2.5 text-sm bg-white border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-zinc-400/30 focus:border-zinc-400 transition-all placeholder-zinc-400 text-zinc-800 font-medium"
+            className="w-full pl-10 pr-4 py-2.5 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all placeholder:text-muted-foreground text-foreground font-medium"
           />
         </div>
       </div>
 
       {/* Progress Card Card */}
-      <div className="w-full bg-white rounded-2xl border border-zinc-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.02)] p-6">
+      <div className="w-full bg-card rounded-2xl border border-border/70 shadow-[0_2px_8px_rgba(0,0,0,0.02)] p-6">
         <div className="flex items-center justify-between mb-3.5">
-          <span className="text-[15px] font-semibold text-zinc-800 tracking-tight select-none">
+          <span className="text-[15px] font-semibold text-foreground tracking-tight select-none">
             Total Progress
           </span>
-          <span className="text-[14px] font-medium text-zinc-400 select-none">
+          <span className="text-[14px] font-medium text-muted-foreground select-none">
             {totalSolvedCount}/{overallTotalCount} Problems
           </span>
         </div>
-        <div className="w-full bg-[#f3f4f6] h-2.5 rounded-full overflow-hidden">
+        <div className="w-full bg-muted h-2.5 rounded-full overflow-hidden">
           <div
-            className="h-full bg-[#9ca3af] rounded-full transition-all duration-500 ease-out"
+            className="h-full rounded-full bg-gradient-to-r from-chart-1 to-chart-2 transition-all duration-500 ease-out"
             style={{ width: `${progressPercentage}%` }}
           />
         </div>
       </div>
 
       {/* Horizontal Topic Filter Scrollable Bar */}
-      <div className="w-full flex flex-col gap-2 bg-white rounded-2xl border border-zinc-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.02)] p-4 select-none">
-        <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1">
+      <div className="w-full flex flex-col gap-2 bg-card rounded-2xl border border-border/70 shadow-[0_2px_8px_rgba(0,0,0,0.02)] p-4 select-none">
+        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">
           Topic Filters
         </span>
-        <div 
+        <div
           className="flex items-center gap-2 overflow-x-auto pb-1"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
@@ -290,8 +292,8 @@ export function QuestionsExplorer({
             onClick={handleClearTopics}
             className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 cursor-pointer ${
               selectedTopics.size === 0
-                ? "bg-zinc-800 border-zinc-800 text-white shadow-sm"
-                : "bg-[#f4f4f5] border-transparent text-zinc-600 hover:bg-zinc-200/60"
+                ? "bg-primary border-primary text-primary-foreground shadow-sm"
+                : "bg-muted border-border text-muted-foreground hover:bg-accent hover:text-foreground"
             }`}
           >
             All Topics
@@ -304,8 +306,8 @@ export function QuestionsExplorer({
                 onClick={() => handleTopicClick(topic)}
                 className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? "bg-zinc-800 border-zinc-800 text-white shadow-sm"
-                    : "bg-white border-zinc-200 text-zinc-600 hover:bg-zinc-50"
+                    ? "bg-primary border-primary text-primary-foreground shadow-sm"
+                    : "bg-background border-border text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
               >
                 {topic}
@@ -316,32 +318,31 @@ export function QuestionsExplorer({
       </div>
 
       {/* Main Card: Questions Table Card */}
-      <div className="w-full bg-white rounded-2xl border border-zinc-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
+      <div className="w-full bg-card rounded-2xl border border-border/70 shadow-[0_2px_8px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
         <div className="w-full overflow-x-auto">
-          <div className="min-w-[900px] flex flex-col">
-            
+          <div className="min-w-225 flex flex-col">
             {/* Table Header Row */}
-            <div className="grid grid-cols-[80px_1fr_100px_120px_80px] items-center px-6 py-4 border-b border-zinc-100 bg-white select-none">
-              <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
+            <div className="grid grid-cols-[80px_1fr_100px_120px_80px] items-center px-6 py-4 border-b border-border/60 bg-card select-none">
+              <span className="text-xs font-semibold text-muted-foreground text-center uppercase tracking-wider">
                 Done
               </span>
-              <span className="text-xs font-semibold text-zinc-400 text-left uppercase tracking-wider">
+              <span className="text-xs font-semibold text-muted-foreground text-left uppercase tracking-wider">
                 Problem
               </span>
-              <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
+              <span className="text-xs font-semibold text-muted-foreground text-center uppercase tracking-wider">
                 Links
               </span>
-              <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
+              <span className="text-xs font-semibold text-muted-foreground text-center uppercase tracking-wider">
                 Difficulty
               </span>
-              <span className="text-xs font-semibold text-zinc-400 text-center uppercase tracking-wider">
+              <span className="text-xs font-semibold text-muted-foreground text-center uppercase tracking-wider">
                 Bookmark
               </span>
             </div>
 
             {/* Table Body Rows */}
             {paginatedQuestions.length === 0 ? (
-              <div className="text-center py-20 text-zinc-400 font-medium bg-[#fafafa]">
+              <div className="text-center py-20 text-muted-foreground font-medium bg-muted/30">
                 No questions match your current search/filters.
               </div>
             ) : (
@@ -350,7 +351,7 @@ export function QuestionsExplorer({
                 const isSolved = solvedSet.has(q.id);
                 const isLoading = loadingId === q.id;
                 const isBookmarked = bookmarkedSet.has(q.id);
-                
+
                 // Lock logic: all questions are available for all (no locking)
                 const isLocked = false;
 
@@ -360,24 +361,26 @@ export function QuestionsExplorer({
                   <div
                     key={q.id}
                     className={`grid grid-cols-[80px_1fr_100px_120px_80px] items-center px-6 py-4.5 transition-colors duration-200 ${
-                      relativeIndex % 2 === 0 ? "bg-[#fafafa]" : "bg-white"
-                    } hover:bg-zinc-50/80`}
+                      relativeIndex % 2 === 0 ? "bg-muted/30" : "bg-card"
+                    } hover:bg-accent/50`}
                   >
                     {/* Column 1: Done Status */}
                     <div className="flex justify-center items-center">
                       {isLocked ? (
-                        <Lock className="h-[18px] w-[18px] text-zinc-300 stroke-[2.2]" />
+                        <Lock className="h-4.5 w-4.5 text-muted-foreground/50 stroke-[2.2]" />
                       ) : (
                         <button
                           onClick={() => !isLoading && handleToggleSolved(q.id)}
                           disabled={isLoading}
                           className={`h-5 w-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
                             isSolved
-                              ? "bg-zinc-800 border-zinc-800 text-white"
-                              : "border-zinc-300 hover:border-zinc-500 bg-white"
+                              ? "bg-primary border-primary text-primary-foreground"
+                              : "border-border bg-background hover:border-foreground/30"
                           } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
-                          {isSolved && <Check className="h-3.5 w-3.5 stroke-[3.2]" />}
+                          {isSolved && (
+                            <Check className="h-3.5 w-3.5 stroke-[3.2]" />
+                          )}
                         </button>
                       )}
                     </div>
@@ -385,7 +388,7 @@ export function QuestionsExplorer({
                     {/* Column 2: Problem Title */}
                     <div className="text-left pr-4">
                       {isLocked ? (
-                        <span className="text-[15px] font-medium text-zinc-300 select-none">
+                        <span className="text-[15px] font-medium text-muted-foreground/50 select-none">
                           {q.title}
                         </span>
                       ) : (
@@ -393,7 +396,7 @@ export function QuestionsExplorer({
                           href={(q.leetcode_link || q.link || "#")!}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[15px] font-semibold text-zinc-800 hover:text-zinc-950 hover:underline underline-offset-4 decoration-zinc-400 transition-colors"
+                          className="text-[15px] font-semibold text-foreground hover:text-foreground/80 hover:underline underline-offset-4 decoration-muted-foreground transition-colors"
                         >
                           {q.title}
                         </a>
@@ -422,7 +425,9 @@ export function QuestionsExplorer({
                           <GFGLogo />
                         </a>
                       ) : (
-                        <span className="text-zinc-300 text-sm font-medium select-none">—</span>
+                        <span className="text-muted-foreground/50 text-sm font-medium select-none">
+                          —
+                        </span>
                       )}
                     </div>
 
@@ -449,14 +454,16 @@ export function QuestionsExplorer({
                     <div className="flex justify-center items-center">
                       <button
                         onClick={() => toggleBookmark(q.id)}
-                        className="p-1 hover:bg-zinc-50 rounded-full transition-colors group cursor-pointer"
-                        title={isBookmarked ? "Remove Bookmark" : "Bookmark Problem"}
+                        className="p-1 hover:bg-muted rounded-full transition-colors group cursor-pointer"
+                        title={
+                          isBookmarked ? "Remove Bookmark" : "Bookmark Problem"
+                        }
                       >
                         <Bookmark
-                          className={`h-[18px] w-[18px] stroke-[1.8] transition-all duration-200 ${
+                          className={`h-4.5 w-4.5 stroke-[1.8] transition-all duration-200 ${
                             isBookmarked
                               ? "fill-amber-500 text-amber-500 scale-105"
-                              : "text-zinc-300 group-hover:text-zinc-500"
+                              : "text-muted-foreground/50 group-hover:text-foreground"
                           }`}
                         />
                       </button>
@@ -465,15 +472,14 @@ export function QuestionsExplorer({
                 );
               })
             )}
-
           </div>
         </div>
 
         {/* Pagination Footer */}
         {totalCount > 0 && (
-          <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4.5 bg-white border-t border-zinc-100 gap-4 select-none">
+          <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4.5 bg-card border-t border-border/60 gap-4 select-none">
             {/* Show results label */}
-            <span className="text-sm font-medium text-zinc-400">
+            <span className="text-sm font-medium text-muted-foreground">
               Showing results {startIndex + 1}-{endIndex} of {totalCount}
             </span>
 
@@ -482,7 +488,7 @@ export function QuestionsExplorer({
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="inline-flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-semibold border border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50 hover:text-zinc-800 disabled:opacity-50 disabled:pointer-events-none transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-semibold border border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-50 disabled:pointer-events-none transition-colors cursor-pointer"
               >
                 <ChevronLeft className="h-3.5 w-3.5" />
                 <span>Previous</span>
@@ -493,7 +499,7 @@ export function QuestionsExplorer({
                   return (
                     <span
                       key={`ellipsis-${idx}`}
-                      className="px-2 py-1 text-sm font-medium text-zinc-400 select-none"
+                      className="px-2 py-1 text-sm font-medium text-muted-foreground select-none"
                     >
                       ...
                     </span>
@@ -504,10 +510,10 @@ export function QuestionsExplorer({
                   <button
                     key={`page-${num}`}
                     onClick={() => setCurrentPage(num as number)}
-                    className={`h-[32px] min-w-[32px] flex items-center justify-center text-xs font-semibold rounded-lg border transition-all cursor-pointer ${
+                    className={`h-8 min-w-8 flex items-center justify-center text-xs font-semibold rounded-lg border transition-all cursor-pointer ${
                       isSelected
-                        ? "bg-zinc-100 border-zinc-200 text-zinc-800 font-bold shadow-sm"
-                        : "bg-white border-zinc-200 text-zinc-600 hover:bg-zinc-50"
+                        ? "bg-muted border-border text-foreground font-bold shadow-sm"
+                        : "bg-background border-border text-muted-foreground hover:bg-muted"
                     }`}
                   >
                     {num}
@@ -516,9 +522,11 @@ export function QuestionsExplorer({
               })}
 
               <button
-                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                onClick={() =>
+                  setCurrentPage((p) => Math.min(totalPages, p + 1))
+                }
                 disabled={currentPage === totalPages}
-                className="inline-flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-semibold border border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50 hover:text-zinc-800 disabled:opacity-50 disabled:pointer-events-none transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-semibold border border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-50 disabled:pointer-events-none transition-colors cursor-pointer"
               >
                 <span>Next</span>
                 <ChevronRight className="h-3.5 w-3.5" />
@@ -527,7 +535,6 @@ export function QuestionsExplorer({
           </div>
         )}
       </div>
-
     </div>
   );
 }
